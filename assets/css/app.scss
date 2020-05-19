@@ -1,0 +1,22 @@
+// assets/css/global.scss
+
+// customize some Bootstrap variables
+$primary: #222831;
+$secondary: #393E46;
+$tertiary: #00ADB5;
+$quaternary : #EEEEEE;
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+.navbar{
+  a{
+    color: $quaternary;
+  }
+  background-color: $primary;
+}
+
+h1{
+  color: $tertiary;
+  padding: 10px;
+}
