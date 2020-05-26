@@ -4,9 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Program;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+/**
+*Class WildController !
+*@package App\Controller
+*@Route("/wild", name="wild_")
+ */
 
 class WildController extends AbstractController
 {
@@ -57,14 +64,24 @@ class WildController extends AbstractController
             );
         }
 
+        $seasons = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->findBy(['program_id' => $program]);
+        if (!$seasons) {
+            throw $this->createNotFoundException(
+                'No seasons found.'
+            );
+        }
+
         return $this->render('wild/show.html.twig', [
             'program' => $program,
             'slug'  => $slug,
+            'seasons' => $seasons
         ]);
     }
 
     /**
-     * Getting a program with a formatted slug for title
+     * Getting programs by category name
      *
      * @param string $categoryName Category name
      * @Route("/category/{categoryName}", name="show_category")
@@ -101,5 +118,26 @@ class WildController extends AbstractController
             'category' => $category,
             'programs' => $programs
         ]);
+    }
+
+    /**
+     * Getting season by ID
+     *
+     * @param int $id Season id
+     * @Route("/season/{id}", name="show_season")
+     * @return Response
+     */
+    public function showBySeason(int $id):Response
+    {
+        if (!$id) {
+            throw $this
+                ->createNotFoundException('No season ID sent');
+        }
+
+        $season = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->findOneBy(['id' => $id]);
+
+        $season->getProgramId();
     }
 }

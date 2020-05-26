@@ -10,11 +10,14 @@
             <h1 class="mt-0">{{ program.title }}</h1>
             <p>{{ program.summary }}</p>
             <p>Categorie : {{ program.category.name }}</p>
+            {% for season in seasons %}
+                <div>Saison {{ season.number }} - {{ season.year }}</div>
+                <div>{{ season.description}}</div>
+            {% endfor %}
         </div>
+        <a href="{{ path('wild_index') }}">
+            Retour à l'accueil
+        </a>
     </div>
-
-    <a href="{{ path('wild_index') }}">
-        Retour à l'accueil
-    </a>
 
 {% endblock %}
