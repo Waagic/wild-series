@@ -4,7 +4,15 @@
 
 {% block body %}
 
-{{ dump(season) }}{{ dump(program) }}
+    <h1>Saison {{ season.number }} de {{ program.title}} </h1>
+    <div>{{ season.description }}</div>
+    <div>Liste des épisodes :
+        <ul>
+            {% for episode in episodes %}
+                <li>{{ episode.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <a href="{{ path('wild_index') }}">
         Retour à l'accueil
