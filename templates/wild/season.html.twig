@@ -1,0 +1,13 @@
+{# templates/wild/show.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Saison{% endblock %}
+
+{% block body %}
+
+{{ dump(season) }}{{ dump(program) }}
+
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}
