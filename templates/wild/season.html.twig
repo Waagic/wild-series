@@ -3,19 +3,20 @@
 {% block title %}Saison{% endblock %}
 
 {% block body %}
+    <div class="container-fluid season">
+        <h1>Saison {{ season.number }} de {{ program.title }} </h1>
+        <div>{{ season.description }}</div>
+        <div>Liste des épisodes :
+            <ul>
+                {% for episode in episodes %}
+                    <li>{{ episode.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
-    <h1>Saison {{ season.number }} de {{ program.title}} </h1>
-    <div>{{ season.description }}</div>
-    <div>Liste des épisodes :
-        <ul>
-            {% for episode in episodes %}
-                <li>{{ episode.title }}</li>
-            {% endfor %}
-        </ul>
+        <a href="{{ path('wild_index') }}">
+            Retour à l'accueil
+        </a>
     </div>
-
-    <a href="{{ path('wild_index') }}">
-        Retour à l'accueil
-    </a>
 
 {% endblock %}

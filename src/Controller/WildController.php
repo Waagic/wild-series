@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WildController extends AbstractController
 {
     /**
-     * @Route("/wild", name="index")
+     * @Route("/", name="index")
      * @return Response A response instance
      */
     public function index(): Response
@@ -66,7 +66,7 @@ class WildController extends AbstractController
 
         $seasons = $this->getDoctrine()
             ->getRepository(Season::class)
-            ->findBy(['program_id' => $program]);
+            ->findBy(['id' => $program]);
         if (!$seasons) {
             throw $this->createNotFoundException(
                 'No seasons found.'
