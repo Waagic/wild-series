@@ -9,7 +9,7 @@
         <div>Liste des épisodes :
             <ul>
                 {% for episode in episodes %}
-                    <li>{{ episode.title }}</li>
+                    <li><a href="{{ path('wild_show_episode', {'episode': episode.id, 'season': season.id}) }}">{{ episode.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>
