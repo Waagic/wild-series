@@ -36,11 +36,7 @@ class Program
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/([plus belle la vie])\w+/i",
-     *     match=false,
-     *     message="Ici on parle de vraies séries"
-     * )
+     *
      */
     private $summary;
 
