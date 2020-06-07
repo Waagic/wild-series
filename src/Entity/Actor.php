@@ -29,6 +29,11 @@ class Actor
      */
     private $program;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->program = new ArrayCollection();
@@ -73,6 +78,18 @@ class Actor
         if ($this->program->contains($program)) {
             $this->program->removeElement($program);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
