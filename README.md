@@ -15,3 +15,5 @@ Quête 15 : https://www.loom.com/share/cfa78331b1174c9eb480c109ab7c1c9c
 Quête 16 : https://www.loom.com/share/0763e42ee24143eb9246d864db39acfd
 
 Quête 17 : https://www.loom.com/share/b723a7e6f33548f58c368a38e2d1424e
+
+Quête 19 : https://www.loom.com/share/2496bfc75fba4d73b735670a009c0017
