@@ -21,7 +21,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 1; $i < 50; $i++) {
             $episode = new Episode();
             $slugify = new Slugify();
             $episode->setTitle($faker->text($maxNbChars = 20));

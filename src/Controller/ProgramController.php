@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Program;
+use App\Entity\User;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
@@ -18,6 +19,8 @@ class ProgramController extends AbstractController
 {
     /**
      * @Route("/", name="program_index", methods={"GET"})
+     * @param ProgramRepository $programRepository
+     * @return Response
      */
     public function index(ProgramRepository $programRepository): Response
     {
@@ -56,9 +59,13 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{slug}", name="program_show", methods={"GET"})
+     * @param Program $program
+     * @return Response
      */
     public function show(Program $program): Response
     {
+        $user = $this->getUser();
+
         return $this->render('program/show.html.twig', [
             'program' => $program,
         ]);
@@ -66,6 +73,10 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{slug}/edit", name="program_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Program $program
+     * @param Slugify $slugify
+     * @return Response
      */
     public function edit(Request $request, Program $program, Slugify $slugify): Response
     {
@@ -88,6 +99,9 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{slug}", name="program_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
      */
     public function delete(Request $request, Program $program): Response
     {

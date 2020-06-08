@@ -7,28 +7,50 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ episode.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ episode.title }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ episode.number }}</td>
-            </tr>
-            <tr>
-                <th>Synopsis</th>
-                <td>{{ episode.synopsis }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ episode.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ episode.title }}</td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>{{ episode.number }}</td>
+        </tr>
+        <tr>
+            <th>Synopsis</th>
+            <td>{{ episode.synopsis }}</td>
+        </tr>
         </tbody>
     </table>
+    <div class="container-fluid">
+        {% for comment in comments %}
+            Auteur : {{ comment.author.email }}<br>
+            Commentaire : {{ comment.comment }}<br>
+            Note : {{ comment.rate }}<br><br>
+        {% endfor %}
+    </div>
 
-    <a href="{{ path('episode_index') }}">back to list</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="row comment-form">
+            <div class="col-xl-6">
+                <a href="">Laissez un commentaire</a><br/>
+                {{ form_start(form) }}
+                {{ form_row(form.comment) }}
+                {{ form_row(form.rate) }}
+                <button type="submit" name="btnSubmit">Soumettre</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endif %}
 
-    <a href="{{ path('episode_edit', {'slug': episode.slug}) }}">edit</a>
+    <div class="container-fluid">
+        <a href="{{ path('episode_index') }}">back to list</a><br/>
+
+        <a href="{{ path('episode_edit', {'slug': episode.slug}) }}">edit</a><br/>
+    </div>
 
     {{ include('episode/_delete_form.html.twig') }}
 {% endblock %}
