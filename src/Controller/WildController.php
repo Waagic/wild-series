@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,9 +86,7 @@ class WildController extends AbstractController
             );
         }
 
-        $seasons = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->findBy(['id' => $program]);
+        $seasons = $program->getSeasons();
         if (!$seasons) {
             throw $this->createNotFoundException(
                 'No seasons found.'
@@ -178,15 +179,40 @@ class WildController extends AbstractController
      * @param Episode $episode
      * @return Response
      */
-    public function showEpisode(Season $season, Episode $episode): Response
+    public function showEpisode(Season $season, Episode $episode, Request $request): Response
     {
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findOneBy(['id' => $season->getProgram()]);
+
+        $comment = new Comment();
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(['id' => $this->getUser()]);
+
+        $comment->setAuthor($user);
+        $comment->setEpisode($episode);
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirectToRoute('wild_show_episode', ['season' => $season->getId(), 'episode'=>$episode->getId()]);
+        }
+
+        $allComments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findBy(['episode' => $episode]);
+
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
-            'program' => $program
+            'program' => $program,
+            'comments' => $allComments,
+            'form' => $form->createView(),
         ]);
     }
 }

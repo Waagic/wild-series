@@ -7,6 +7,26 @@
         <h1>Saison {{ season.number }} Episode {{ episode.number }} - {{ episode.title }}</h1>
         <h2>{{ program.title }}</h2>
         <p>{{ episode.synopsis }}</p>
+        <div class="container-fluid">
+            {% for comment in comments %}
+                Auteur : {{ comment.author.email }}<br>
+                Commentaire : {{ comment.comment }}<br>
+                Note : {{ comment.rate }}<br><br>
+            {% endfor %}
+        </div>
+
+        {% if is_granted('ROLE_SUBSCRIBER') %}
+            <div class="row comment-form">
+                <div class="col-xl-6">
+                    <a href="">Laissez un commentaire</a><br/>
+                    {{ form_start(form) }}
+                    {{ form_row(form.comment) }}
+                    {{ form_row(form.rate) }}
+                    <button type="submit" name="btnSubmit">Soumettre</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        {% endif %}
         <a href="{{ path('wild_show_season', {'id': season.id}) }}">Retour à la saison</a><br>
         <a href="{{ path('wild_show', {'slug': program.title|lower|replace({' ': '-'}) }) }}">Retour à la série</a><br>
         <a href="{{ path('wild_index') }}">
