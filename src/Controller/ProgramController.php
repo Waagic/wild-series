@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/program")
@@ -46,11 +47,16 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
+            $mailContent = $this->renderView(
+                'program/mail.html.twig',
+                array('program' => $program)
+            );
+
             $email = (new Email())
-                ->from('mychemical@hotmail.fr')
+                ->from($this->getParameter('mailer_from'))
                 ->to('lucas.marguiron@gmail.com')
-                ->subject('Une nouvelle série vient d\'être publiée !')
-                ->html('<p>Une nouvelle série vient d\'être publiée sur Wild Séries !</p>');
+                ->subject( $program->getTitle() . ' vient d\'être publiée !')
+                ->html($mailContent);
 
             $mailer->send($email);
 
