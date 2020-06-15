@@ -3,22 +3,25 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {{ form_start(form) }}
-    {{ form_row(form.searchField) }}
-    <button type="submit" name="btnSearch">Rechercher</button>
-    {{ form_end(form) }}
+    <div class="container-fluid">
+        <h1>Toutes les séries de la table program : </h1>
+        {{ form_start(form) }}
+        {{ form_row(form.searchField) }}
+        <button type="submit" name="btnSearch">Rechercher</button>
+        {{ form_end(form) }}
 
-    {% for program in programs %}
-        <div class="liste-series">
-            <h2><a href="{{ path('wild_show', {'slug': program.title|lower|replace({' ': '-'}) }) }}">{{ loop.index }}
-                    / {{ program.title }} - Catégorie : {{ program.category.name }}</a></h2>
-            <p>{{ program.summary }}</p>
-        </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+        {% for program in programs %}
+            <div class="liste-series">
+                <h2>
+                    <a href="{{ path('wild_show', {'slug': program.title|lower|replace({' ': '-'}) }) }}">{{ loop.index }}
+                        / {{ program.title }} - Catégorie : {{ program.category.name }}</a></h2>
+                <p>{{ program.summary }}</p>
+            </div>
+        {% else %}
+            Aucune série trouvée.
+        {% endfor %}
+        <a href="{{ path('app_index') }}">
+            Retour à l'accueil
+        </a>
+    </div>
 {% endblock %}

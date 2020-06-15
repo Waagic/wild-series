@@ -196,11 +196,11 @@ class WildController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
             $entityManager->flush();
-            return $this->redirectToRoute('wild_show_episode', ['season' => $season->getId(), 'episode'=>$episode->getId()]);
+            return $this->redirectToRoute('wild_show_episode', ['season' => $season->getId(), 'episode' => $episode->getId()]);
         }
 
         $allComments = $this->getDoctrine()
@@ -213,6 +213,25 @@ class WildController extends AbstractController
             'program' => $program,
             'comments' => $allComments,
             'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * Getting user by ID
+     *
+     * @Route("/user/{id}", name="user_profile")
+     * @param User $user
+     * @return Response
+     */
+    public function userProfile(User $user): Response
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(['id' => $user->getId()]);
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
         ]);
     }
 }

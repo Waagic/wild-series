@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+
+        <h1>Bienvenue !</h1>
+
+        <p>Ceci est votre super page de profil, elle est bien nan ?</p>
+
+        <p>Email : {{ user.email }}</p>
+
+        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+    </div>
+
+{% endblock %}

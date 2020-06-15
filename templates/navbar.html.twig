@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="/">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -9,14 +10,21 @@
             <li>
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li>
-                {% if app.user %}
-                    {{ app.user.email }}
+            {% if app.user %}
+                <li>
+                    <a class="nav-link" href="{{ path('wild_user_profile', {'id': app.user.id}) }}">Mon profil</a>
+                </li>
+                <li>
                     <a class="nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
-                {% else %}
+                </li>
+            {% else %}
+                <li>
                     <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
-                {% endif %}
-            </li>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
